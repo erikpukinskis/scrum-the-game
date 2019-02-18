@@ -6,21 +6,25 @@ library.using([
   "browser-bridge",
   "a-wild-universe-appeared",
   "basic-styles",
-  "identifiable"],
-  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable) {
+  "identifiable",
+  "./roi"],
+  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation) {
     var site = new WebSite()
 
     var bridge = new BrowserBridge()
     basicStyles.addTo(bridge)
 
+    recommendation.hostOn(site)
+
     var page = [
       element(".lil-page", [
-        element("h1",
+        element(
+          "h1",
           "Scrum The Game"),
-        element("h1", "The Body of Scrum Guidance made a Recommendation:"),
-        element("p", "Understand value creation by calculating ROI"),
-        element("button", "Accept ROI recommendation"),
-        element("button", "Decline for now")
+        recommendation(
+          bridge,
+          "ROI",
+          "Understand value creation by calculating ROI"),
       ])]
 
 
