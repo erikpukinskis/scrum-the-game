@@ -81,21 +81,22 @@ library.using([
         p("The accounting period for deciding the Revenue share will be 12 months following the issuance of the Bond, known as the \"Risk Period\". After that the bond will be considered paid in full and legacy dividends will be granted at the discretion of future story writers"),
         p("Below are the stories committed to three separate sprints. The money will be used to pay Erik to perform all tasks needed to complete them.")),
 
-      v0,
-
       lil(
         element("h1", "Version 1.0"),
         p("In order to make the first sale, players need to be able to deliver stories, and stories need to pay .d.u's"),
         p("This makes there something there to play.")),
 
-      v1,
+      p(v0),
+
+      p(v1),
 
       lil(
         element("h1", "Version 2.0"),
         p("The second release will disburse ROI back to all of the contributors."),
-        p("This make it worth something to play.")),
+        p("This make it worth something to play."),
+        p("This also creates a natural place for the paywall: pay to be a Project Owner.")),
 
-      v2,
+      p(v2),
 
       lil(
         element("h1", "Purchase Agreement"),

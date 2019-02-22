@@ -20,7 +20,7 @@ backlog(
 
 v1: function(backlog) {
 backlog(
-  "Enough for estimate/delivery/done/etc buttons on the right",[
+  "Voxel layout: Enough for estimate/delivery/done/etc buttons on the right",[
   // 3 stories:
   "I'm just pressing buttons and filling out forms, and they are either causing code to drop down, or they are getting replaced by code.",
   "In the grid to the right of each string in the array of the backlog, there are some buttons for editing, estimating, marking as done",
@@ -28,7 +28,7 @@ backlog(
 },
 v2: function(backlog) {
 backlog(
-  "v1.0 ROI can be delivered",[
+  "ROI can be delivered",[
   // 8 stories:
   "Some code is pasted and delivered",
   "The story is marked as done",
