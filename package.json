@@ -13,6 +13,9 @@
     "web-element": "*",
     "web-site": "*"
   },
+  "scripts": {
+    "start": "node scrum-the-game"
+  },
   "devDependencies": {
     "run-test": "*"
   }
