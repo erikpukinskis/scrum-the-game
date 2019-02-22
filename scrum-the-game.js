@@ -9,29 +9,19 @@ library.using([
   "identifiable",
   "./roi",
   "scrum-backlog",
-  "render-code"],
-  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog) {
+  "render-code",
+  "./prospectus"],
+  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog, renderCode, prospectus) {
 
     backlog.epics([
       // plant forests
-      "@roi: UI allows you to enter all artifacts from the ROI equation with buttons that puts code on the timeline (12 stories)",
-      "@scrum-the-game: Set up a gumroad link and get a customer"
-      "@roi: ROI can be delivered",
-      "@investors: An investor gets a dividend",
-      "@roi: Contributors get paid legacy d.u.'s": 
-      "@voxel: lines of code with widgets attached to the right, and stacked in a column with other partials",
+      "v0@roi: UI allows you to enter all artifacts from the ROI equation with buttons that puts code on the timeline (12 stories)",
+      "@voxel: enough for estimate/delivery/done/etc buttons on the right",
+      "v1@roi: ROI can be delivered",
+      "@scrum-the-game: Set up a gumroad link and get a customer",
+      "v3@investors: An investor gets a dividend",
+      "v4@roi: Contributors get paid legacy d.u.'s",
       "@scrum-the-game: finish SBOK"])
-
-    backlog("real life", [
-      "Developers can put in their youtube livestream URL and mark off a delivery demonstration"])
-
-    backlog("v4: legacy", [
-      "All future Scrum The Game Stories that are dependent on this one (which will be most of them) will also pay out part of their d.u.’s to this any other infrastructural stories. So if I do a story volume of 100 this year and 50 are dependent on this story, and there are on average 10 contributors in each Story’s lineage, and they split 1/5 of a d.u then this story will be paid an additional 100 / 10 / 5 = 2 d.u.’s over the coarse of that year.",
-      "If it’s typical to have stories valued at $100 in dROI, then that’s an additional $200 in cash dividends to the contributors to this story (the investors and the producers) for a total ROI after one year of $1.40 on the dollar"])
-
-    backlog.done([
-      "@browser-bridge: forks bridge to get partial over AJAX",
-      "@scrum-the-game: recommendation acceptance drops rendered code into story flow"])
 
 
     var site = new WebSite()
@@ -42,16 +32,80 @@ library.using([
 
     recommendation.hostOn(site)
 
+    var v0 = bridge.partial()
+    var v1 = bridge.partial()
+    var v2 = bridge.partial()
+
+    renderCode(v0, prospectus.v0)
+    renderCode(v1, prospectus.v1)
+    renderCode(v2, prospectus.v2)
+
+    var p = element.template.container("p")
+
+    bridge.addToHead(
+      element.stylesheet(
+        element.style(
+          ".editable",{
+          "font-size": "0.8em"})))
+
+    var lil = element.template.container(".lil-page")
+
     var page = [
-      element(".lil-page", [
-        element(
-          "h1",
-          "Scrum The Game"),
+      element(
+        "h1",
+        "Scrum The Game"),
+
+      lil(
         recommendation(
           bridge,
           "ROI",
-          "Understand value creation by calculating ROI"),
-      ])]
+          "Understand value creation by calculating ROI")),
+
+      lil(
+        element("h1", "The most important step of Scrum is telling a Story"),
+        p(element(
+          "input",{
+          "type": "text",
+          "placeholder": "Type a Story for the future"})),
+        p(element("button", "Save"))),
+
+      element(
+        "p",
+        element.style({
+          "margin": "10em 0"}),
+        "[ Non game space ]<br><br><br>Financial stuff below... "),
+
+      lil(
+        element("h1", "Prospectus"),
+        p("This prospectus has a face value of <strong>$1800</strong> and an expected ROI of <strong>$0.01 on the dollar</strong> after planned sales, <strong>$1.20 on the dollar</strong> after good sales (200 units) and an <strong>additional $0.20 on the dollar</strong> in legacy dividends"),
+        p("The accounting period for deciding the Revenue share will be 12 months following the issuance of the Bond, known as the \"Risk Period\". After that the bond will be considered paid in full and legacy dividends will be granted at the discretion of future story writers"),
+        p("Below are the stories committed to three separate sprints. The money will be used to pay Erik to perform all tasks needed to complete them.")),
+
+      v0,
+
+      lil(
+        element("h1", "Version 1.0"),
+        p("In order to make the first sale, players need to be able to deliver stories, and stories need to pay .d.u's"),
+        p("This makes there something there to play.")),
+
+      v1,
+
+      lil(
+        element("h1", "Version 2.0"),
+        p("The second release will disburse ROI back to all of the contributors."),
+        p("This make it worth something to play.")),
+
+      v2,
+
+      lil(
+        element("h1", "Purchase Agreement"),
+        p("This is where you agree to buy an amount"),
+        p(element(
+          "input",{
+          "type": "text",
+          "value": "$50"})),
+        p(element("button", "Become a Contributor"))),
+    ]
 
     site.addRoute(
       "get",
@@ -64,33 +118,44 @@ library.using([
 
     // CHANGE LOG
 
-    scrumBacklog.done(
+    backlog.done(
       "there is a server")
 
-    scrumBacklog.done(
-      "UI for delivering npm module")
+    backlog.done(
+      "@browser-bridge: forks bridge to get partial over AJAX",
+      "@scrum-the-game: recommendation acceptance drops rendered code into story flow")
 
-    scrumBacklog.done(
+    backlog.done([
+      "@browser-bridge: forks bridge to get partial over AJAX",
+      "@scrum-the-game: recommendation acceptance drops rendered code into story flow"])
+
+    backlog.done(
       "prioritize stories for sprint")
 
-    scrumBacklog.deliver(
+    backlog.deliver(
       "render comments in render-code",
       "npm:write-code@0.21.0")
 
-    scrumBacklog.done(
+    backlog.done(
       "render comments in render-code",
       "npm:write-code@0.21.0")
 
 
-    scrumBacklog(
-      // Risks are added to Stories in the Prioritized Product Backlog
-      // For example, there's a 1/2 probability that a prototype will be hard to use and require a revision that will cost -1.
-      // For example, let's say they accept to "Check risk attitude" in order to decide on the set of risk to accept
-      // If the company was judged to be risk seeking, and the story is Done, then the "Check risk attitude" recommendation would get a share of the deliverable.
-      // The deliverable share is disbursed as a VAT tax at each handoff
-      // So, the person who produced the deliverable would take 20% of the deliverable. The scrum master would a split of the next 20%, depending on how many team members they have. So, if there are 4 team members they take 5% of each deliverable
-      // The Product and Project Owners do the same, except split by the total number of the producers under their products
-      // People can take 1/2, 2x, or 5x shares if they are either working part time or working double-time with their energy and/or expertise
-    )
+
+    backlog("Wishlist",[
+      "Developers can put in their youtube livestream URL and mark off a delivery demonstration",
+      "UI for delivering npm module"])
+
+
+
+    backlog("Risks",[
+      "Risks are added to Stories in the Prioritized Product Backlog",
+      "For example, there's a 1/2 probability that a prototype will be hard to use and require a revision that will cost -1.",
+      "For example, let's say they accept to Check Risk Attitude in order to decide on the set of risk to accept",
+      "If the company was judged to be risk seeking, and the story is Done, then the Check Risk Attitude recommendation would get a share of the deliverable.",
+      "The deliverable share is disbursed as a VAT tax at each handoff",
+      "So, the person who produced the deliverable would take 20% of the deliverable. The scrum master would a split of the next 20%, depending on how many team members they have. So, if there are 4 team members they take 5% of each deliverable",
+      "The Product and Project Owners do the same, except split by the total number of the producers under their products",
+      "People can take 1/2, 2x, or 5x shares if they are either working part time or working double-time with their energy and/or expertise"])
 
   })

@@ -2,13 +2,13 @@
   "main": "scrum-the-game.js",
   "dependencies": {
     "a-wild-universe-appeared": "*",
-    "basic-styles": "*",
+    "basic-styles": "^0.44.0",
     "bridge-module": "*",
-    "browser-bridge": "^0.158.0",
+    "browser-bridge": "^0.161.0",
     "identifiable": "*",
     "make-request": "*",
     "module-library": "*",
-    "render-code": "^0.9.0",
+    "render-code": "^0.19.0",
     "scrum-backlog": "^0.1.0",
     "web-element": "*",
     "web-site": "*"
