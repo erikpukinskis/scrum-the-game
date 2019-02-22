@@ -10,15 +10,29 @@ library.using([
   "./roi",
   "scrum-backlog",
   "render-code"],
-  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, scrumBacklog) {
+  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog) {
 
-    scrumBacklog.epics(
+    backlog.epics([
       // plant forests
+      "@roi: UI allows you to enter all artifacts from the ROI equation with buttons that puts code on the timeline (12 stories)",
+      "@scrum-the-game: Set up a gumroad link and get a customer"
+      "@roi: ROI can be delivered",
+      "@investors: An investor gets a dividend",
+      "@roi: Contributors get paid legacy d.u.'s": 
+      "@voxel: lines of code with widgets attached to the right, and stacked in a column with other partials",
+      "@scrum-the-game: finish SBOK"])
+
+    backlog("real life", [
+      "Developers can put in their youtube livestream URL and mark off a delivery demonstration"])
+
+    backlog("v4: legacy", [
+      "All future Scrum The Game Stories that are dependent on this one (which will be most of them) will also pay out part of their d.u.’s to this any other infrastructural stories. So if I do a story volume of 100 this year and 50 are dependent on this story, and there are on average 10 contributors in each Story’s lineage, and they split 1/5 of a d.u then this story will be paid an additional 100 / 10 / 5 = 2 d.u.’s over the coarse of that year.",
+      "If it’s typical to have stories valued at $100 in dROI, then that’s an additional $200 in cash dividends to the contributors to this story (the investors and the producers) for a total ROI after one year of $1.40 on the dollar"])
+
+    backlog.done([
       "@browser-bridge: forks bridge to get partial over AJAX",
-      "@scrum-the-game: recommendation acceptance drops rendered code into story flow",
-      "@voxel",
-      "@roi",
-      "finish SBOK")
+      "@scrum-the-game: recommendation acceptance drops rendered code into story flow"])
+
 
     var site = new WebSite()
 
