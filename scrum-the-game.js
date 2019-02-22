@@ -46,7 +46,7 @@ library.using([
       element.stylesheet(
         element.style(
           ".editable",{
-          "font-size": "0.8em"})))
+          "font-size": "10pt"})))
 
     var lil = element.template.container(".lil-page")
 
