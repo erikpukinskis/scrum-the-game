@@ -112,7 +112,7 @@ library.using([
       "/",
       bridge.requestHandler(page))
 
-    site.start(4040)
+    site.start(process.env.PORT || 4040)
 
 
 
