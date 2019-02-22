@@ -81,9 +81,9 @@ module.exports = library.export(
           var bridge = BrowserBridge.fromRequest(request).forResponse(response)
 
           bridge.asap(function() {
-            console.log("this is my scrip")})
+            console.log("maybe even do stuff in javascript!")})
 
-          bridge.sendPartial("This is my body")
+          bridge.sendPartial(element("This is where we'd show stuff related to the <strong>"+request.params.id+"</strong> recommendation"))
         })
 
       site.see(
