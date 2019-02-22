@@ -1,14 +1,17 @@
 {
   "main": "scrum-the-game.js",
   "dependencies": {
-    "module-library": "*",
-    "web-site": "*",
-    "browser-bridge": "*",
-    "web-element": "*",
+    "a-wild-universe-appeared": "*",
     "basic-styles": "*",
     "bridge-module": "*",
-    "a-wild-universe-appeared": "*",
-    "identifiable": "*"
+    "browser-bridge": "^0.156.0",
+    "identifiable": "*",
+    "make-request": "*",
+    "module-library": "*",
+    "render-code": "^0.9.0",
+    "scrum-backlog": "^0.1.0",
+    "web-element": "*",
+    "web-site": "*"
   },
   "devDependencies": {
     "run-test": "*"

@@ -3,29 +3,34 @@ var library = require("module-library")(require)
 module.exports = library.export(
   "scrum-the-game/roi",[
   library.ref(),
+  "scrum-backlog",
   "web-element",
-  "bridge-module"],
-  function(lib, element, bridgeModule) {
+  "bridge-module",
+  "browser-bridge"],
+  function(lib, scrumBacklog, element, bridgeModule, BrowserBridge) {
+
+    scrumBacklog(
+      "Something is delivered",
+      "the code that changed is visible where the story was delivered",
+      "The story is marked as done",
+      "1 d.u. (delivered unit) is disbursed to the story",
+      "the various contractors are awarded shares in payment for labor and their own materials",
+      "A Wild ROI Appears:",
+      "eROI = (expected cost - expected revenue) / (expected cost * time until realization) * Risks",
+      "new ROI = opportunity costs / previous revenue + whatever is left from the 1 d.u.",
+      "A delta ROI is awarded to the product manager",
+      "Whatever is left of the actual money goes to the Scrum Guidance Body recommendations and into a pot for the collective good",
+      "People just have d.u.'s. That's it. That's the game.")
+
 
     function prepareBridge(bridge) {
       if (bridge.remember("scrum-the-game/roi")) {
         return
       }
 
-      var addPath = bridge.defineFunction([
-        bridgeModule(lib, "add-html", bridge),
-        bridgeModule(lib, "web-element", bridge)],
-        function addPath(addHtml, element, path) {
+      // A story is created
 
-          var iframe = element(
-            "iframe",{
-            "src": path},
-            element.style({
-              "max-width": "400px",
-              "border": "none"}))
-
-          addHtml(iframe.html())
-        })
+      bridge.cache()
 
       bridge.domReady([
         bridgeModule(lib, "add-html", bridge)],
@@ -41,10 +46,14 @@ module.exports = library.export(
             el)})
 
       var accept = bridge.defineFunction(
-        [removeElement, addPath],
-        function acceptRecommendation(removeElement, addPath, elementId, recommendation) {
+        [
+        removeElement,
+        bridge.loadPartial.asCall()],
+        function acceptRecommendation(removeElement, loadPartial, elementId, recommendation) {
           removeElement(elementId)
-          addPath("/accept/recommendation/"+recommendation)
+
+          loadPartial("/accept/recommendation/"+recommendation,
+            ".lil-page")
         })
 
       var calls = {
@@ -59,6 +68,8 @@ module.exports = library.export(
 
     recommendation.hostOn = hostOn
 
+    var cachedBridges = {}
+
     function hostOn(site) {
       if (site.remember("scrum-the-game/roi")) {
         return
@@ -67,9 +78,12 @@ module.exports = library.export(
         "get",
         "/accept/recommendation/:id",
         function(request, response) {
-          var id = request.params.id
+          var bridge = BrowserBridge.fromRequest(request).forResponse(response)
 
-          response.send("ya")
+          bridge.asap(function() {
+            console.log("this is my scrip")})
+
+          bridge.sendPartial("This is my body")
         })
 
       site.see(
