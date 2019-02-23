@@ -10,6 +10,11 @@ module.exports = library.export(
   "render-code"],
   function(lib, backlog, element, bridgeModule, BrowserBridge, renderCode) {
 
+    var recommendations = {
+      "ROI": "Understand value creation by calculating ROI",
+    }
+
+
     // All of this stuff is UIs on the timeline that disappear below code that's added to the timline, which is flexbox reverse
 
     // It is at timescale 8, yet the display is at timescale 1, which would normally mean all the items are 8 units apart vertically.
@@ -123,8 +128,8 @@ module.exports = library.export(
           var bridge = BrowserBridge.fromRequest(request).forResponse(response)
 
           var partial = bridge.partial()
-          var recommendation = request.params.id
-          var code = "recommendation(\n  "+JSON.stringify(recommendation)+",\n  \"#accepted\")"
+          var recommendation = recommendations[request.params.id]
+          var code = "sprint.acceptedPractice(\n  \"my-sprint\",\n  "+JSON.stringify(recommendation)+")"
 
           renderCode(partial, code, {noLogo: true})
 
@@ -150,10 +155,6 @@ module.exports = library.export(
         element(
           "p",
           "Understand value creation by calculating ROI")])
-
-      var recommendations = {
-        "ROI": "Understand value creation by calculating ROI",
-      }
 
       recommendationElement.assignId()
 
