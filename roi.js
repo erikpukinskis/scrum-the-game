@@ -126,7 +126,7 @@ module.exports = library.export(
           var recommendation = request.params.id
           var code = "recommendation(\n  "+JSON.stringify(recommendation)+",\n  \"#accepted\")"
 
-          renderCode(partial, code)
+          renderCode(partial, code, {noLogo: true})
 
           bridge.sendPartial([
             partial,

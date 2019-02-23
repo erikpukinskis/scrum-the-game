@@ -23,7 +23,6 @@ library.using([
       "v4@roi: Contributors get paid legacy d.u.'s",
       "@scrum-the-game: finish SBOK"])
 
-
     var site = new WebSite()
 
     var bridge = new BrowserBridge()
