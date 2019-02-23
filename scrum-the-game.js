@@ -64,7 +64,7 @@ library.using([
       "p",
       element.style({
         "margin": "10em 0"}),
-      "[ Non game space ]")
+      "non game space ...")
 
     var offer = element([
       lil(
