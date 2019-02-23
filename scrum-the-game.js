@@ -103,8 +103,15 @@ library.using([
         p("This is where you agree to buy an amount"),
         p(element(
           "input",{
+          "name": "amount",
           "type": "text",
+          "size": "5",
           "value": "$50"})),
+        p(element(
+          "input",{
+          "name": "phone",
+          "type": "text",
+          "placeholder": "Enter your phone number"})),
         p(element("button", "Become a Contributor"))),
     ]
 

@@ -44,6 +44,16 @@ module.exports = library.export(
       "opportunity cost = other stories ROI / other stories estimated length",
       "eROI = (expected cost - expected revenue) / (expected opportunity cost * length of timeline)"])
 
+    backlog("add-ins",[
+      // Ticks when this button gets clicks, every second:
+
+      // 1: Some sort of color effect in the button
+
+      // 2: The recommendation accept form is replaced with an "Accepted Recommendation" plaque, which gives a little bounce. log paragraph: "A recommendation was accepted!" appears with it
+
+      // 3: New stuff from the partial above because the recommendation was accepted.
+    ])
+
     backlog(
       "v1.0 ROI can be delivered",[
       // 8 stories:
@@ -140,10 +150,10 @@ module.exports = library.export(
         recommendationElement.id,
         "ROI")
 
-      var acceptElement = element(
+      var acceptElement = element("p",element(
         "button",
         "Accept ROI recommendation",{
-        "onclick": accept.evalable()})
+        "onclick": accept.evalable()}))
 
       var decline = calls.decline.withArgs(
         recommendationElement.id)
