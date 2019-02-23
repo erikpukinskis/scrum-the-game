@@ -110,6 +110,7 @@ module.exports = library.export(
 
     var tellStory = element(".lil-page",
       element("h1", "The most important step of Scrum is telling a Story"),
+      element("p", "What's a thing that someone could value?"),
       element("p", element(
         "input",{
         "type": "text",
@@ -135,12 +136,46 @@ module.exports = library.export(
 
           bridge.sendPartial([
             partial,
-            tellStory])
+            tellStory,
+            stepsToGetRoi(bridge)])
         })
 
       site.see(
         "scrum-the-game/roi",
         true)
+    }
+
+
+    function stepsToGetRoi(bridge) {
+      var backlogPartial = bridge.partial()
+
+
+      var backlogSource = "backlog([\n  \"A scrum game where you can earn a D.U.\"\n  // -- Minimum Marketable Features Here --\n  ])"
+
+      renderCode(backlogPartial, backlogSource)
+
+      var p = element.template.container("p")
+
+      var page = element(
+        ".lil-page",[
+
+        element("h1", "Choose a business case."),
+
+        p("In order to calcuate a Return on Investment, we need a strategy for money to appear."),
+
+        p("Eventually there will be many strategies, but right now there is only one:"),
+
+        element("h1", "Fill a gap in your market segments"),
+
+        element("textarea",
+          "People who are paying us\nPeople who are not paying us"),
+
+        p(element("button", "Fill a gap between these segments")),
+      ])
+
+      return [
+        page,
+        backlogPartial]        
     }
 
     function recommendation(bridge, id, text) {

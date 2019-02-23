@@ -41,19 +41,23 @@ library.using([
 
     var p = element.template.container("p")
 
+
+
+
     bridge.addToHead(
       element.stylesheet([
         element.style(
           "h1",{
           "font-size": "1.4em",
           "color": "#427b6f"}),
-        
+
         element.style(
           ".editable",{
           "font-size": "10pt"}),
 
         element.style(
           ".feed",{
+          "max-width": "400px",
           "display": "flex",
           "flex-direction": "column-reverse"}),
       ]))
