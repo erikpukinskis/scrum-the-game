@@ -43,38 +43,31 @@ library.using([
     var p = element.template.container("p")
 
     bridge.addToHead(
-      element.stylesheet(
+      element.stylesheet([
         element.style(
           ".editable",{
-          "font-size": "10pt"})))
+          "font-size": "10pt"}),
+
+        element.style(
+          ".feed",{
+          "display": "flex",
+          "flex-direction": "column-reverse"}),
+      ]))
 
     var lil = element.template.container(".lil-page")
 
-    var page = [
-      element(
-        "h1",
-        "Scrum The Game"),
+    var roi = recommendation(
+      bridge,
+      "ROI",
+      "Understand value creation by calculating ROI")
 
-      lil(
-        recommendation(
-          bridge,
-          "ROI",
-          "Understand value creation by calculating ROI")),
+    var nonGameSpace = element(
+      "p",
+      element.style({
+        "margin": "10em 0"}),
+      "[ Non game space ]")
 
-      lil(
-        element("h1", "The most important step of Scrum is telling a Story"),
-        p(element(
-          "input",{
-          "type": "text",
-          "placeholder": "Type a Story for the future"})),
-        p(element("button", "Save"))),
-
-      element(
-        "p",
-        element.style({
-          "margin": "10em 0"}),
-        "[ Non game space ]<br><br><br>Financial stuff below... "),
-
+    var offer = element([
       lil(
         element("h1", "Prospectus"),
         p("This prospectus has a face value of <strong>$1800</strong> and an expected ROI of <strong>$0.01 on the dollar</strong> after planned sales, <strong>$1.20 on the dollar</strong> after good sales (200 units) and an <strong>additional $0.20 on the dollar</strong> in legacy dividends"),
@@ -113,6 +106,16 @@ library.using([
           "type": "text",
           "placeholder": "Enter your phone number"})),
         p(element("button", "Become a Contributor"))),
+    ])
+
+    var page = [
+      element(
+        "h1",
+        "Scrum The Game"),
+      element(".feed", [
+        offer,
+        nonGameSpace,
+        roi]),
     ]
 
     site.addRoute(

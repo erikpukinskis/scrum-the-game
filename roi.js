@@ -6,8 +6,9 @@ module.exports = library.export(
   "scrum-backlog",
   "web-element",
   "bridge-module",
-  "browser-bridge"],
-  function(lib, backlog, element, bridgeModule, BrowserBridge) {
+  "browser-bridge",
+  "render-code"],
+  function(lib, backlog, element, bridgeModule, BrowserBridge, renderCode) {
 
     // All of this stuff is UIs on the timeline that disappear below code that's added to the timline, which is flexbox reverse
 
@@ -43,16 +44,6 @@ module.exports = library.export(
       "A wild cost appeeared",
       "opportunity cost = other stories ROI / other stories estimated length",
       "eROI = (expected cost - expected revenue) / (expected opportunity cost * length of timeline)"])
-
-    backlog("add-ins",[
-      // Ticks when this button gets clicks, every second:
-
-      // 1: Some sort of color effect in the button
-
-      // 2: The recommendation accept form is replaced with an "Accepted Recommendation" plaque, which gives a little bounce. log paragraph: "A recommendation was accepted!" appears with it
-
-      // 3: New stuff from the partial above because the recommendation was accepted.
-    ])
 
     backlog(
       "v1.0 ROI can be delivered",[
@@ -90,10 +81,11 @@ module.exports = library.export(
         removeElement,
         bridge.loadPartial.asCall()],
         function acceptRecommendation(removeElement, loadPartial, elementId, recommendation) {
+
           removeElement(elementId)
 
           loadPartial("/accept/recommendation/"+recommendation,
-            ".lil-page")
+            ".feed")
         })
 
       var calls = {
@@ -110,6 +102,16 @@ module.exports = library.export(
 
     var cachedBridges = {}
 
+
+    var tellStory = element(".lil-page",
+      element("h1", "The most important step of Scrum is telling a Story"),
+      element("p", element(
+        "input",{
+        "type": "text",
+        "placeholder": "Type a Story for the future"})),
+      element("p", element(
+        "button", "Save"))) 
+
     function hostOn(site) {
       if (site.remember("scrum-the-game/roi")) {
         return
@@ -120,10 +122,15 @@ module.exports = library.export(
         function(request, response) {
           var bridge = BrowserBridge.fromRequest(request).forResponse(response)
 
-          bridge.asap(function() {
-            console.log("maybe even do stuff in javascript!")})
+          var partial = bridge.partial()
+          var recommendation = request.params.id
+          var code = "recommendation(\n  "+JSON.stringify(recommendation)+",\n  \"#accepted\")"
 
-          bridge.sendPartial(element("This is where we'd show stuff related to the <strong>"+request.params.id+"</strong> recommendation"))
+          renderCode(partial, code)
+
+          bridge.sendPartial([
+            partial,
+            tellStory])
         })
 
       site.see(
@@ -135,10 +142,14 @@ module.exports = library.export(
 
       var calls = prepareBridge(bridge)
 
-      var recommendationElement = element([
-          element("h1", "The Body of Scrum Guidance made a Recommendation:"),
-          element("p", "Understand value creation by calculating ROI"),
-      ])
+      var recommendationElement = element(
+        ".lil-page", [
+        element(
+          "h1",
+          "The Body of Scrum Guidance made a Recommendation:"),
+        element(
+          "p",
+          "Understand value creation by calculating ROI")])
 
       var recommendations = {
         "ROI": "Understand value creation by calculating ROI",
@@ -149,6 +160,15 @@ module.exports = library.export(
       var accept = calls.accept.withArgs(
         recommendationElement.id,
         "ROI")
+
+      // Ticks when this button gets clicks, every second:
+
+      // 1: Some sort of color effect in the button
+
+      // 2: The recommendation accept form is replaced with an "Accepted Recommendation" plaque, which gives a little bounce. log paragraph: "A recommendation was accepted!" appears with it
+
+      // 3: New stuff from the partial above because the recommendation was accepted.
+
 
       var acceptElement = element("p",element(
         "button",
