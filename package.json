@@ -8,7 +8,7 @@
     "identifiable": "*",
     "make-request": "*",
     "module-library": "*",
-    "render-code": "^0.30.0",
+    "render-code": "^0.31.0",
     "scrum-backlog": "^0.1.0",
     "web-element": "*",
     "web-site": "*"
