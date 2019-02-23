@@ -129,7 +129,7 @@ module.exports = library.export(
 
           var partial = bridge.partial()
           var recommendation = recommendations[request.params.id]
-          var code = "sprint.acceptedPractice(\n  \"my-sprint\",\n  "+JSON.stringify(recommendation)+")"
+          var code = "sprint(\n  \"my-sprint\")\nsprint.acceptPractice(\n  \"my-sprint\",\n  "+JSON.stringify(recommendation)+")"
 
           renderCode(partial, code, {noLogo: true})
 
