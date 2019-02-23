@@ -10,8 +10,9 @@ library.using([
   "./roi",
   "scrum-backlog",
   "render-code",
-  "./prospectus"],
-  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog, renderCode, prospectus) {
+  "./prospectus",
+  "./investors"],
+  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog, renderCode, prospectus, investors) {
 
     backlog.epics([
       // plant forests
@@ -98,29 +99,17 @@ library.using([
         p("This also creates a natural place for the paywall: pay to be a Project Owner.")),
 
       p(v2),
-
-      lil(
-        element("h1", "Purchase Agreement"),
-        p("This is where you agree to buy an amount"),
-        p(element(
-          "input",{
-          "name": "amount",
-          "type": "text",
-          "size": "5",
-          "value": "$50"})),
-        p(element(
-          "input",{
-          "name": "phone",
-          "type": "text",
-          "placeholder": "Enter your phone number"})),
-        p(element("button", "Become a Contributor"))),
     ])
+
+    var agreement = bridge.partial()
+    investors.purchaseAgreement(agreement)
 
     var page = [
       element(
         "h1",
         "Scrum The Game"),
       element(".feed", [
+        agreement,
         offer,
         nonGameSpace,
         roi]),

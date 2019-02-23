@@ -70,6 +70,7 @@ module.exports = library.export(
         return
       }
 
+
       // A story is created
 
       bridge.cache()
@@ -93,9 +94,29 @@ module.exports = library.export(
             ".feed")
         })
 
+
+      var tellStory = bridge.defineFunction(
+        [bridge.loadPartial.asCall()],
+        function(loadPartial) {
+          event.preventDefault()
+          var text = event.target.querySelector(
+            "input[name=storyText")
+
+          loadPartial({
+            "method": "post",
+            "path": "/stories",
+            "data": {
+              "text": text.value}},
+            ".feed")
+
+          text.value = ""
+        })
+
+
       var calls = {
         accept: accept,
-        decline: removeElement
+        decline: removeElement,
+        tellStory: tellStory.withArgs(BrowserBridge.event),
       }
 
       bridge.see("scrum-the-game/roi", calls)
@@ -107,21 +128,45 @@ module.exports = library.export(
 
     var cachedBridges = {}
 
-
-    var tellStory = element(".lil-page",
+    var tellStory = element.template("form.lil-page",{
+      "method": "post",
+      "action": "/stories"},
       element("h1", "The most important step of Scrum is telling a Story"),
       element("p", "What's a thing that someone could value?"),
       element("p", element(
         "input",{
         "type": "text",
-        "placeholder": "Type a Story for the future"})),
+        "name": "storyText",
+        "placeholder": "A Story for the future"})),
       element("p", element(
-        "button", "Save")))  
-           
+        "button", "Add to Prioritized Product Backlog")),
+      function(bridge) {
+        var calls = bridge.remember("scrum-the-game/roi")
+        this.addAttribute("onsubmit", calls.tellStory.evalable())})  
+         
+
     function hostOn(site) {
       if (site.remember("scrum-the-game/roi")) {
         return
       }
+
+      site.addRoute(
+        "post",
+        "/stories",
+        function(request, response) {
+          var bridge = BrowserBridge.fromRequest(request).forResponse(response)
+          var text = request.body.text
+          var backlogPartial = bridge.partial()
+
+          // A scrum game where you can earn a D.U.
+
+          var backlogSource = "backlog([\n  "+JSON.stringify(text)+"\"\n  // -- Minimum Marketable Features Here --\n  ])"
+
+          renderCode(backlogPartial, backlogSource,{noLogo: true})
+
+          bridge.sendPartial(backlogPartial)
+        })
+
       site.addRoute(
         "get",
         "/accept/recommendation/:id",
@@ -136,7 +181,7 @@ module.exports = library.export(
 
           bridge.sendPartial([
             partial,
-            tellStory,
+            tellStory(bridge),
             stepsToGetRoi(bridge)])
         })
 
@@ -147,12 +192,6 @@ module.exports = library.export(
 
 
     function stepsToGetRoi(bridge) {
-      var backlogPartial = bridge.partial()
-
-
-      var backlogSource = "backlog([\n  \"A scrum game where you can earn a D.U.\"\n  // -- Minimum Marketable Features Here --\n  ])"
-
-      renderCode(backlogPartial, backlogSource)
 
       var p = element.template.container("p")
 
@@ -173,9 +212,7 @@ module.exports = library.export(
         p(element("button", "Fill a gap between these segments")),
       ])
 
-      return [
-        page,
-        backlogPartial]        
+      return page        
     }
 
     function recommendation(bridge, id, text) {
