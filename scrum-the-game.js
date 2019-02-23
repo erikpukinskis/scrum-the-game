@@ -44,6 +44,11 @@ library.using([
     bridge.addToHead(
       element.stylesheet([
         element.style(
+          "h1",{
+          "font-size": "1.4em",
+          "color": "#427b6f"}),
+        
+        element.style(
           ".editable",{
           "font-size": "10pt"}),
 

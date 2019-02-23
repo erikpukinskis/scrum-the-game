@@ -115,8 +115,8 @@ module.exports = library.export(
         "type": "text",
         "placeholder": "Type a Story for the future"})),
       element("p", element(
-        "button", "Save"))) 
-
+        "button", "Save")))  
+           
     function hostOn(site) {
       if (site.remember("scrum-the-game/roi")) {
         return
