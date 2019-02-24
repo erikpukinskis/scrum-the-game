@@ -4,7 +4,7 @@
     "a-wild-universe-appeared": "*",
     "basic-styles": "^0.48.0",
     "bridge-module": "*",
-    "browser-bridge": "^0.162.0",
+    "browser-bridge": "^0.165.0",
     "identifiable": "*",
     "make-request": "*",
     "module-library": "*",

@@ -164,7 +164,10 @@ module.exports = library.export(
 
           renderCode(backlogPartial, backlogSource,{noLogo: true})
 
-          bridge.sendPartial(backlogPartial)
+          backlogPartial.addAttribute("data-stick-to", "backlog")
+
+          bridge.sendPartial(backlogPartial,{
+            "stickTo": "backlog"})
         })
 
       site.addRoute(
@@ -173,16 +176,20 @@ module.exports = library.export(
         function(request, response) {
           var bridge = BrowserBridge.fromRequest(request).forResponse(response)
 
-          var partial = bridge.partial()
+          var sprintCode = bridge.partial()
           var recommendation = recommendations[request.params.id]
-          var code = "sprint(\n  \"my-sprint\")\nsprint.acceptPractice(\n  \"my-sprint\",\n  "+JSON.stringify(recommendation)+")"
+          var source = "sprint(\n  \"my-sprint\")\nsprint.acceptPractice(\n  \"my-sprint\",\n  "+JSON.stringify(recommendation)+")"
 
-          renderCode(partial, code, {noLogo: true})
+          renderCode(sprintCode, source, {noLogo: true})
+
+          var tellIt = tellStory(bridge)
+          tellIt.addAttribute("data-stick-to", "backlog")
 
           bridge.sendPartial([
-            partial,
-            tellStory(bridge),
-            stepsToGetRoi(bridge)])
+            sprintCode,
+            tellIt,
+            stepsToGetRoi(bridge)],{
+            "stickTo": "backlog"})
         })
 
       site.see(
@@ -215,9 +222,38 @@ module.exports = library.export(
       return page        
     }
 
+    function playVoice(script) {
+      return element(
+        element.tag("audio"),{
+        "controls": "true"},
+
+        element(
+          element.tag("source"),{
+          "src": "/voice/"+script,
+          "type": "audio/mpeg"}))}
+
     function recommendation(bridge, id, text) {
 
       var calls = prepareBridge(bridge)
+
+      var player = playVoice("The body of scrum guidance. has made a recommendation")
+
+      var play = bridge.remember("scrum-the-game/play")
+
+      if (!play) {
+        play = bridge.defineFunction(playMedia)}
+    
+      function playMedia(id) {
+        var video = document.getElementById(id)
+
+        var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2
+
+        if (!isPlaying) {
+          video.play()}}
+
+      bridge.domReady(
+        play.withArgs(
+          player.assignId()))
 
       var recommendationElement = element(
         ".lil-page", [
@@ -226,7 +262,8 @@ module.exports = library.export(
           "The Body of Scrum Guidance made a Recommendation:"),
         element(
           "p",
-          "Understand value creation by calculating ROI")])
+          "Understand value creation by calculating ROI"),
+        player])
 
       recommendationElement.assignId()
 

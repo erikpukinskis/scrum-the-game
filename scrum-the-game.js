@@ -11,8 +11,9 @@ library.using([
   "scrum-backlog",
   "render-code",
   "./prospectus",
-  "./investors"],
-  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog, renderCode, prospectus, investors) {
+  "./investors",
+  "./voices"],
+  function(element, WebSite, BrowserBridge, aWildUniverseAppeared, basicStyles, identifiable, recommendation, backlog, renderCode, prospectus, investors, voices) {
 
     backlog.epics([
       // plant forests
@@ -29,8 +30,8 @@ library.using([
     var bridge = new BrowserBridge()
 
     basicStyles.addTo(bridge)
-
     recommendation.hostOn(site)
+    voices.hostOn(site)
 
     var v0 = bridge.partial()
     var v1 = bridge.partial()
@@ -121,6 +122,7 @@ library.using([
       bridge.requestHandler(page))
 
     site.start(process.env.PORT || 4040)
+
 
 
 
