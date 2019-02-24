@@ -234,7 +234,11 @@ module.exports = library.export(
         ".lil-page", [
         element(
           "h1",
-          "The Body of Scrum Guidance made a Recommendation:"),
+          "The Body of Scrum Guidance made a Recommendation:",
+          voices.player(
+            bridge,
+            "The body of scrum guidance. has made a recommendation",
+            3000)),
         element(
           "p",
           "Understand value creation by calculating ROI")])
@@ -271,15 +275,14 @@ module.exports = library.export(
         voices.player(
           bridge,
           "Something about R O I",
-          10000))
-
-
-      return element([
+          10000),
         voices.player(
           bridge,
-          "The body of scrum guidance. has made a recommendation",
-          3000),
-        recommendationElement])}
+          "Would you like to accept their recommendation",
+          15000))
+
+
+      return recommendationElement}
 
     return recommendation
   })
