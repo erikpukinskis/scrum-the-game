@@ -68,6 +68,9 @@ module.exports = library.export(
         "border-radius": "5px",
         "opacity": "0.3",
 
+        ".playing": {
+          "opacity": "1"},
+
         " audio": {
           "margin": "-9px",
           "width": "400px"}}),
@@ -89,16 +92,24 @@ module.exports = library.export(
 
     function playMedia(id, delay) {
       setTimeout(playNow.bind(null, id), delay)
-  
-      function playNow(id) {
-        var video = document.getElementById(id)
 
+      var video = document.getElementById(id)
+
+      video.onended = function() {
+        video.parentNode.classList.remove("playing")}
+
+      video.onplay = function() {
+        video.parentNode.classList.add("playing")}
+
+      function playNow(id) {
+        video = document.getElementById(id)
         var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2
 
         if (!isPlaying) {
           video.play().catch(
             function(e) {
               throw e})}}
+
     }
 
       
