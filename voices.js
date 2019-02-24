@@ -61,18 +61,21 @@ module.exports = library.export(
     var stylesheet = element.stylesheet([
       element.style(
         ".player-controls",{
+        "display": "inline-block",
         "overflow": "hidden",
-        "width": "36px",
-        "height": "36px",
+        "width": "34px",
+        "height": "34px",
         "border": "2px solid black",
         "border-radius": "5px",
         "opacity": "0.3",
+        "vertical-align": "middle",
+        "margin-left": "10px",
 
         ".playing": {
           "opacity": "1"},
 
         " audio": {
-          "margin": "-9px",
+          "margin": "-10px",
           "width": "400px"}}),
       ])
 

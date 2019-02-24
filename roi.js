@@ -229,7 +229,6 @@ module.exports = library.export(
 
       var calls = prepareBridge(bridge)
 
-      var player = voices.player(bridge, "The body of scrum guidance. has made a recommendation", 2000)
 
       var recommendationElement = element(
         ".lil-page", [
@@ -238,8 +237,7 @@ module.exports = library.export(
           "The Body of Scrum Guidance made a Recommendation:"),
         element(
           "p",
-          "Understand value creation by calculating ROI"),
-        player])
+          "Understand value creation by calculating ROI")])
 
       recommendationElement.assignId()
 
@@ -267,10 +265,21 @@ module.exports = library.export(
       var declineButton = element("button", "Decline for now",{
         "onclick": decline.evalable()})
 
-      recommendationElement.addChildren(acceptElement, declineButton)
+      recommendationElement.addChildren(
+        acceptElement,
+        declineButton,
+        voices.player(
+          bridge,
+          "Something about R O I",
+          10000))
 
-      return recommendationElement
-    }
+
+      return element([
+        voices.player(
+          bridge,
+          "The body of scrum guidance. has made a recommendation",
+          3000),
+        recommendationElement])}
 
     return recommendation
   })
