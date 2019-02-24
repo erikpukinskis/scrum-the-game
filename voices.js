@@ -2,9 +2,12 @@ var library = require("module-library")(require)
 
 module.exports = library.export(
   "scrum-the-game/voices",[
+  library.ref(),
   "fs",
-  "web-element"],
-  function(fs, element) {
+  "web-element",
+  "bridge-module",
+  "./play-media"],
+  function(lib, fs, element, bridgeModule, _) {
 
     function hostOnSite(site) {
       fs.readdir(
@@ -78,44 +81,28 @@ module.exports = library.export(
           "margin": "-10px",
           "width": "400px"}}),
       ])
+     
 
     function definePlayOn(bridge) {
       var play = bridge.remember("scrum-the-game/play")
 
-      if (!play) {
-        play = bridge.defineFunction(playMedia)
-        bridge.addToHead(
-          stylesheet.html())
-        bridge.see("scrum-the-game/play", play)
-      }
+      if (play) { 
+        return play }
 
-      return play
-    }
+      bridge.addToHead(
+        stylesheet.html())
 
+      play = bridgeModule(
+        lib,
+        "scrum-the-game/play-media",
+        bridge),
 
-    function playMedia(id, delay) {
-      setTimeout(playNow.bind(null, id), delay)
+      bridge.see(
+        "scrum-the-game/play",
+        play)
 
-      var video = document.getElementById(id)
+      return play }
 
-      video.onended = function() {
-        video.parentNode.classList.remove("playing")}
-
-      video.onplay = function() {
-        video.parentNode.classList.add("playing")}
-
-      function playNow(id) {
-        video = document.getElementById(id)
-        var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2
-
-        if (!isPlaying) {
-          video.play().catch(
-            function(e) {
-              throw e})}}
-
-    }
-
-      
     return {
       hostOn: hostOnSite,
       player: player }

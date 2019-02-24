@@ -11,7 +11,8 @@
     "render-code": "^0.31.0",
     "scrum-backlog": "^0.1.0",
     "web-element": "*",
-    "web-site": "*"
+    "web-site": "*",
+    "add-html": "*"
   },
   "scripts": {
     "start": "node scrum-the-game"
