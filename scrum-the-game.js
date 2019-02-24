@@ -31,7 +31,6 @@ library.using([
 
     basicStyles.addTo(bridge)
     recommendation.hostOn(site)
-    voices.hostOn(site)
 
     var v0 = bridge.partial()
     var v1 = bridge.partial()

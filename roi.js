@@ -7,8 +7,9 @@ module.exports = library.export(
   "web-element",
   "bridge-module",
   "browser-bridge",
-  "render-code"],
-  function(lib, backlog, element, bridgeModule, BrowserBridge, renderCode) {
+  "render-code",
+  "./voices"],
+  function(lib, backlog, element, bridgeModule, BrowserBridge, renderCode, voices) {
 
     var recommendations = {
       "ROI": "Understand value creation by calculating ROI",
@@ -150,6 +151,8 @@ module.exports = library.export(
         return
       }
 
+      voices.hostOn(site)
+
       site.addRoute(
         "post",
         "/stories",
@@ -222,38 +225,11 @@ module.exports = library.export(
       return page        
     }
 
-    function playVoice(script) {
-      return element(
-        element.tag("audio"),{
-        "controls": "true"},
-
-        element(
-          element.tag("source"),{
-          "src": "/voice/"+script,
-          "type": "audio/mpeg"}))}
-
     function recommendation(bridge, id, text) {
 
       var calls = prepareBridge(bridge)
 
-      var player = playVoice("The body of scrum guidance. has made a recommendation")
-
-      var play = bridge.remember("scrum-the-game/play")
-
-      if (!play) {
-        play = bridge.defineFunction(playMedia)}
-    
-      function playMedia(id) {
-        var video = document.getElementById(id)
-
-        var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2
-
-        if (!isPlaying) {
-          video.play()}}
-
-      bridge.domReady(
-        play.withArgs(
-          player.assignId()))
+      var player = voices.player(bridge, "The body of scrum guidance. has made a recommendation", 2000)
 
       var recommendationElement = element(
         ".lil-page", [
